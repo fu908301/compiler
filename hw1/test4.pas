@@ -1,8 +1,8 @@
+(* comment 1
+   comment 2 *)
 program test;
 var
   i : integer;
-  r35 : float;
 begin
-  r35 := 2.5;
   read(i);
 end;
