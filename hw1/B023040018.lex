@@ -23,12 +23,14 @@ not_ID [0-9\!\@\#\$\%\^\&\*]({alpha}|{digit})+|{alpha}({alpha}|{digit}){30,}
 reserved_word [Pp][Rr][Oo][Gg][Rr][Aa][Mm]|label|const|nil|type|packed|array|record|set|file|of|var|procedure|function|forward|begin|end|if|then|else|case|while|do|repeat|until|for|to|downto|goto|with|div|mod|and|not|in|integer|string|float
 string \'([^'\n]|\'\'){0,30}\'
 unstring \'[^'\n]+[^']|\'([^'\n]|\'\'){30,}\'
-comment {left_comment}[^\n]+{right_comment}
+not_comment \(\*(.&(\(\*|\*\)))*?\*\)
+comment \(\*(.|[\n])*?\*\)
 eol \n
-symbol [:\(\);\*]|:=
+symbol [:\(\);\*\+\-\*\/]|:=
 
 character .
 %%
+{not_comment} {printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid comment%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
 {comment} {printf("Line: %d, 1st char: %d,%c%s%c is a %ccomment%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
 {unstring} {printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid string%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
 {string} {printf("Line: %d, 1st char: %d,%c%s%c is a %cstring%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
