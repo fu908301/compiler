@@ -3,26 +3,21 @@
 unsigned charCount = 1, lineCount = 1;
 char mark = 34;
 %}
-left_comment \(\*
-right_comment \*\)
 alpha [a-zA-Z_]
 digit [0-9]
 digits [0-9]+
-mid [eE\.\+\-]
-not_mid [eE\+\-]
-midreal ({digits}|{mid})
-unmidreal ({digits}|{not_mid})
 zdigit [1-9]
 zdigits [1-9]+
 integer [+-]{0,1}{zdigit}{digits}
-uninteger [+-]{0,1}[0]{digits}
-real [+-]{0,1}{zdigit}{midreal}+{digit}
-unreal [+-]{0,1}[0]{2,}{unmidreal}+|{real}[0]+|[\.]{unmidreal}+|[+-]{0,1}{unmidreal}+[\.]
+uninteger [+-]{0,1}[0]+{digits}
+exp [eE][+-]?{digits}
+real [+-]?({digits}\.{digits}?|{digits}?\.{digits}){exp}?
+unreal [+-]?({uninteger}\.{digits}?|{uninteger}?\.{digits}){exp}?|[+-]?({digits}\.{digits}?[0]+|{digits}?\.{digits}[0]+){exp}?|[+-]?({digits}\.|{digits}?\.){exp}?|[+-]?(\.{digits}?|\.{digits}){exp}?
 ID  {alpha}({alpha}|{digit}){0,29}
 not_ID [0-9\!\@\#\$\%\^\&\*]({alpha}|{digit})+|{alpha}({alpha}|{digit}){30,}
-reserved_word [Pp][Rr][Oo][Gg][Rr][Aa][Mm]|label|const|nil|type|packed|array|record|set|file|of|var|procedure|function|forward|begin|end|if|then|else|case|while|do|repeat|until|for|to|downto|goto|with|div|mod|and|not|in|integer|string|float
+reserved_word [Pp][Rr][Oo][Gg][Rr][Aa][Mm]|[Ll][Aa][Bb][Ee][Ll]|[Cc][Oo][Nn][Ee][Ss][Tt]|[Nn][Ii][Ll]|[Tt][Yy][Pp][Ee]|[Pp][Aa][Cc][Kk][Ee][Dd]|[Aa][Rr][Rr][Aa][Yy]|[Rr][Ee][Cc][Oo][Rr][Dd]|[Ss][Ee][Tt]|[Ff][Ii][Ll][Ee]|[Oo][Ff]|[Vv][Aa][Rr]|[Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee]|[Ff][Uu][Nn][Cc][Tt][Ii][Oo][Nn]|[Ff][Oo][Rr][Ww][Aa][Rr][Dd]|[Bb][Ee][Gg][Ii][Nn]|[Ee][Nn][Dd]|[Ii][Ff]|[Tt][Hh][Ee][Nn]|[Ee][Ll][Ss][Ee]|[Cc][Aa][Ss][Ee]|[Ww][Hh][Ii][Ll][Ee]|[Dd][Oo]|[Rr][Ee][Pp][Ee][Aa][Tt]|[Uu][Nn][Tt][Ii][Ll]|[Ff][Oo][Rr]|[Tt][Oo]|[Dd][Oo][Ww][Nn][Tt][Oo]|[Gg][Oo][Tt][Oo]|[Ww][Ii][Tt][Hh]|[Dd][Ii][Vv]|[Mm][Oo][Dd]|[Aa][Nn][Dd]|[Nn][Oo][Tt]|[Ii][Nn]|[Ii][Nn][Tt][Ee][Gg][Ee][Rr]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ff][Ll][Oo][Aa][Tt]
 string \'([^'\n]|\'\'){0,30}\'
-unstring \'[^'\n]+[^']|\'([^'\n]|\'\'){30,}\'
+unstring \'([^'\n]|\'\')+[;]|\'([^'\n]|\'\'){30,}\'
 not_comment \(\*(.&(\(\*|\*\)))*?\*\)
 comment \(\*(.|[\n])*?\*\)
 eol \n
