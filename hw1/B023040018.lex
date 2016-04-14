@@ -8,7 +8,7 @@ digit [0-9]
 digits [0-9]+
 zdigit [1-9]
 zdigits [1-9]+
-integer [+-]{0,1}{zdigit}{digits}
+integer [+-]{0,1}{zdigit}{digits}?
 uninteger [+-]{0,1}[0]+{digits}
 exp [eE][+-]?{digits}
 real [+-]?({digits}\.{digits}?|{digits}?\.{digits}){exp}?
