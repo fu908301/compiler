@@ -70,6 +70,8 @@ void symbol_int()
 {
   char _int[40];
   int i;
+  for(i = 0;i < 40;i++)
+    _int[i] = 0;
   for(i = 1;i < yyleng;i++)
     _int[i-1] = yytext[i];
   if(yytext[0] == '+'|| yytext[0] == '-')

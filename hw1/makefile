@@ -24,5 +24,7 @@ test10:
 	./B023040018 < test10.pas
 test11:
 	./B023040018 < test11.pas
+test12:
+	./B023040018 < test12.pas
 clean:
 	rm lex.yy.c B023040018
