@@ -32,7 +32,7 @@ symbol [\!\@\#\$\%\^\&\*\(\)\[\]\{\}\+\=\-\"\:\/\,\-\.\?\~\;]|:=
 character .
 %%
 {comment} {comment_or_not();number = 0;}
-{string} {_string();number = 0;}
+{string} {printf("Line: %d, 1st char: %d,%c%s%c is a %cstring%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {unstring} {printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid string%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {reserved_word} {printf("Line: %d, 1st char: %d,%c%s%c is a %creserved word%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {eol} {lineCount++; charCount = 1;number = 0;}
@@ -45,30 +45,6 @@ character .
 {symbol} {printf("Line: %d, 1st char: %d, %c%s%c is a %csymbol%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {character} {charCount++;number = 0;}
 %%
-void _string()
-{
-  char real_string[40];
-  int i,j = 0,k=0;
-  for(i = 0;i < 40 ;i++)
-    real_string[i] = 0;
-  if(yyleng >= 3)
-  {
-    while(j < yyleng)
-    {
-      if((yytext[j] == 39 && yytext[j+1] == 39)&&(j > 0))
-	j++;
-      real_string[k] = yytext[j];
-      k++;
-      j++;
-    }
-    printf("Line: %d, 1st char: %d,%c%s%c is a %cstring%c\n",lineCount,charCount,mark,real_string,mark,mark,mark);
-  }
-  else if (yyleng < 3)
-    printf("Line: %d, 1st char: %d,%c%s%c is a %cstring%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);
-  charCount += yyleng;
-  for(i = 0;i < 40 ;i++)
-    real_string[i] = 0;
-}
 void comment_or_not()
 {
   int i,judge = 0;
