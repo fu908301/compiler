@@ -26,7 +26,8 @@ reserved_word [Pp][Rr][Oo][Gg][Rr][Aa][Mm]|[Ll][Aa][Bb][Ee][Ll]|[Cc][Oo][Nn][Ee]
 string \'([^'\n]|\'\'){0,30}\'
 unstring \'[^\n\'|\'\']+[0-9a-zA-z_\!\@\#\$\%\^\&\*\(\)\[\]\{\}\+\=\-\"\:\/\,\-\.\?\~\;]|\'([^'\n]|\'\'){30,}\'
 comment \(\*(.|[\n])*?\*\)
-eol \n
+eol \n|\r\n
+space [ \t]
 symbol [\!\@\#\$\%\^\&\*\(\)\[\]\{\}\+\=\-\"\:\/\,\-\.\?\~\;]|:=
 
 character .
@@ -43,7 +44,8 @@ character .
 {ID} {printf("Line: %d, 1st char: %d, %c%s%c is an %cID%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {not_ID} {printf("Line: %d, 1st char: %d, %c%s%c is an %cinvalid ID%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
 {symbol} {printf("Line: %d, 1st char: %d, %c%s%c is a %csymbol%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;number = 0;}
-{character} {charCount++;number = 0;}
+{space} {charCount++;}
+{character} {printf("%s error!\n",yytext);charCount++;number = 0;}
 %%
 void comment_or_not()
 {
