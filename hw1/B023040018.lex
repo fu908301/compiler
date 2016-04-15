@@ -52,7 +52,7 @@ void comment_or_not()
   int i,judge = 0;
   for(i = 1;i < yyleng - 2;i++)
   {
-    if((yytext[i] == '*'&&yytext[i+1] == ')'))
+    if(yytext[i] == '*'&&yytext[i+1] == ')')
     {
       printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid comment%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);
       charCount += yyleng;
