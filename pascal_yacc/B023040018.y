@@ -22,6 +22,7 @@
 %%
 prog :  RESERVED_WORD ID{
      printf("%s%s",$1,$2);}
+
     ;
 %%
 int main()
