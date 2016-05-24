@@ -30,17 +30,17 @@ symbol [:\(\);\*]|:=
 
 character .
 %%
-{comment} {charCount += yyleng;return COMMENT;}
+{comment} {charCount += yyleng;yylval.name = strdup(yytext);return COMMENT;}
 {unstring} {printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid string%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
-{string} {charCount += yyleng;return STRING;}
-{reserved_word} {charCount += yyleng;return RESERVED_WORD;}
+{string} {charCount += yyleng;yylval.name = strdup(yytext);return STRING;}
+{reserved_word} {charCount += yyleng;yylval.name = strdup(yytext);return RESERVED_WORD;}
 {eol} {lineCount++; charCount = 1;}
 {unreal} {printf("Line: %d, 1st char: %d,%c%s%c is an %cinvalid real%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
 {real} {charCount += yyleng;return REAL;}
-{integer} {charCount += yyleng;return INTEGER;}
+{integer} {charCount += yyleng;yylval.name = strdup(yytext);return INTEGER;}
 {uninteger} {printf("Line: %d, 1st char: %d, %c%s%c is an %cinvalid integer%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
-{id} {charCount += yyleng;return ID;}
+{id} {charCount += yyleng;yylval.name = strdup(yytext);return ID;}
 {not_id} {printf("Line: %d, 1st char: %d, %c%s%c is an %cinvalid ID%c\n",lineCount,charCount,mark,yytext,mark,mark,mark);charCount += yyleng;}
-{symbol} {charCount += yyleng;return SYMBOL;}
+{symbol} {charCount += yyleng;yylval.name = strdup(yytext);return SYMBOL;}
 {character} {charCount++;}
 %%

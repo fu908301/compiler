@@ -3,12 +3,9 @@
   #include <stdlib.h>
   #include <string.h>
   int line_num = 0;
-  extern char* yytext;
 %}
 %union{
-  char name[128];
-  int val;
-  float fval;
+  char *name;
 }
 %token ID RESERVED_WORD COMMENT STRING REAL INTEGER SYMBOL
 
@@ -16,12 +13,16 @@
 %type <name> RESERVED_WORD 
 %type <name> COMMENT 
 %type <name> STRING 
-%type <val> REAL 
+%type <name> REAL 
 %type <name> INTEGER 
 %type <name> SYMBOL
+%type <name> prog
+%type <name> myname
 %%
-prog :  RESERVED_WORD ID{
-     printf("%s%s",$1,$2);}
+prog :  RESERVED_WORD myname{
+     printf("%s%s\n",$1,$2);}
+myname : ID{
+       }
 
     ;
 %%
