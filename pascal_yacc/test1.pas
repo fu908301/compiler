@@ -1,6 +1,6 @@
 program test;
 var
-  i : integer;
+  z : integer;
 begin
   read(i);
 end;
