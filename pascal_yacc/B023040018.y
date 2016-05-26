@@ -2,57 +2,70 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h>
-  int line_num = 0;
   extern int lineCount;
-  void yyerror(char *str);
+  extern int charCount;
+  extern char *yytext;
+  void yyerror(char *s);
 %}
 %union{
   char *name;
 }
-%token <name> ID RESERVED_WORD COMMENT STRING REAL INTEGER SYMBOL SPACE
-%token <name> BIG SMALL BIGEQUAL SMALLEQUAL BIGSMALL EQUAL
-%token <name> EOL
-%type <name> type1
-%type <name> type2
-%type <name> type3
-%type <name> id
-%type <name> reserve
-%type <name> space
-%type <name> symbol
+%token <name> INTEGERS REALS ID REAL INTEGER PROGRAM VAR BEGINN END ARRAY OF READ WRITE DO FOR IF THEN TO EQUAL1 EQUAL2 BIG SMALL BIGEQUAL SMALLEQUAL BIGSMALL LEFTC RIGHTC LEFTS RIGHTS COLON SEMICOLON PLUS MINUS CROSS DIVID DOT COMMA
+%type <name> prog
+%type <name> proname
+%type <name> declist
+%type <name> dec
+%type <name> type
+%type <name> standtype
+%type <name> arraytype
+%type <name> idlist
+%type <name> stmtlist
+%type <name> stmt
+%type <name> assign
+%type <name> ifstmt
+%type <name> exp
+%type <name> relop
+%type <name> simpexp
+%type <name> term
+%type <name> factor
+%type <name> read
+%type <name> write
+%type <name> for
+%type <name> varid
+%type <name> body
+%type <name> indexexp
 %%
-line : 
-     | line type1 EOL {printf("Line %d: %s\n",lineCount,$2);}
-     | line type2 EOL {printf("Line %d:   %s\n",lineCount,$2);}
-     | line type3 EOL {printf("Line %d:   %s\n",lineCount,$2);}
-type1 : type1 symbol {strcat($1,$2);}
-      | reserve space id {strcat($1," ");strcat($1,$3);}
-      | reserve {$$ = $1;}
-type2 : space type2 {$$ = $2;}
-      | type2 symbol {strcat($1,$2);}
-      | type2 space reserve {strcat($1, " ");strcat($1, $3);}
-      | type2 space symbol {strcat($1, " ");strcat($1, $3);}
-      | ID {$$ = $1;}
-type3: space type3 {$$ = $2;}
-          | type3 symbol {strcat($1,$2);}
-          | type3 id {strcat($1,$2);}
-          | reserve {$$ = $1;}
-reserve : reserve space reserve {strcat($1, " ");strcat($1, $3);} 
-        | RESERVED_WORD {$$ = $1;}
-        | space reserve {$$ = $1;}
-symbol : SYMBOL {$$ = $1;}
-space : SPACE {$$ = $1;}
-      | SPACE SPACE {strcat($1,$2);}
-id: ID {$$ = $1;}
-;
+prog :  PROGRAM proname SEMICOLON VAR declist SEMICOLON BEGINN  stmtlist SEMICOLON END DOT | error
+proname : ID
+declist : dec | declist SEMICOLON dec 
+dec : idlist COLON type 
+type : standtype | arraytype 
+standtype : INTEGERS | REALS 
+arraytype : ARRAY LEFTS INTEGER DOT DOT INTEGER RIGHTS OF standtype 
+idlist : ID | idlist COMMA ID 
+stmtlist : stmt | stmtlist SEMICOLON stmt 
+stmt : assign | read | write | for| ifstmt 
+assign : varid EQUAL2 simpexp 
+ifstmt : IF LEFTC exp RIGHTC THEN body 
+exp : simpexp | exp relop simpexp 
+relop : BIG | SMALL | BIGEQUAL | SMALLEQUAL | BIGSMALL | EQUAL1 
+simpexp : term | simpexp PLUS term| simpexp MINUS term
+term : factor | term CROSS factor  | term DIVID factor 
+factor : varid | INTEGER | REAL | LEFTC simpexp RIGHTC
+read : READ LEFTC idlist RIGHTC
+write : WRITE LEFTC idlist RIGHTC
+for : FOR indexexp DO body 
+indexexp : varid EQUAL2 simpexp TO exp 
+varid : ID | ID LEFTS simpexp RIGHTS 
+body : stmt | BEGINN stmtlist SEMICOLON END 
+    ;
 %%
 int main()
 {
+  printf("Line 1: ");
   yyparse();
   return 0;
 }
-void yyerror(char *str)
-{
-  printf("%s is error",str);
-}
-
-
+void yyerror(char *s){
+    fprintf(stderr,"errorline %d : %s %s\n",lineCount,yytext,s);
+  }
