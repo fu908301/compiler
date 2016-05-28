@@ -6,7 +6,7 @@ char mark = 34;
 %}
 left_comment \(\*
 right_comment \*\)
-alpha [a-zA-Z_]
+alpha [A-Za-z_]
 digit [0-9]
 digits [0-9]*
 mid [eE\.\+\-]
@@ -53,7 +53,7 @@ var [Vv][Aa][Rr]
 begin [Bb][Ee][Gg][Ii][Nn]
 end [Ee][Nn][Dd]
 array [Aa][Rr][Rr][Aa][Yy]
-of [Oo][F}]
+of [Oo][Ff]
 if [Ii][Ff]
 then [Tt][Hh][Ee][Nn]
 read [Rr][Ee][Aa][Dd]
@@ -71,11 +71,11 @@ space [ ]
 {var} {charCount += yyleng;printf("%s",yytext);return VAR;}
 {begin} {charCount += yyleng;printf("%s",yytext);return BEGINN;}
 {end} {charCount += yyleng;printf("%s",yytext);return END;}
-[array] {charCount += yyleng;printf("%s",yytext);return ARRAY;}
 {of} {charCount += yyleng;printf("%s",yytext);return OF;}
 {if} {charCount += yyleng;printf("%s",yytext);return IF;}
 {then} {charCount += yyleng;printf("%s",yytext);return THEN;}
 {read} {charCount += yyleng;printf("%s",yytext);return READ;}
+{array} {charCount += yyleng;printf("%s",yytext);return ARRAY;}
 {write} {charCount += yyleng;printf("%s",yytext);return WRITE;}
 {do} {charCount += yyleng;printf("%s",yytext);return DO;}
 {for} {charCount += yyleng;printf("%s",yytext);return FOR;}

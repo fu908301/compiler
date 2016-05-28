@@ -1,7 +1,7 @@
 program test;
 var
-  x: array [1 .. 5] of integer
-  b, c, d: integer;
+  x: array [1 .. 5] of integer;
+  a, c, d: integer;
 begin
   b := 1;
   c := 3;
