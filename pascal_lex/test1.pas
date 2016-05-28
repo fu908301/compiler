@@ -1,6 +1,6 @@
 program test;
 var
-  i : integer;
+  a : integer;
   r35 : float;
 begin
   r35 := 2.5;
