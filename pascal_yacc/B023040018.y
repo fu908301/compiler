@@ -37,27 +37,27 @@
 %%
 prog :  PROGRAM proname SEMICOLON VAR declist SEMICOLON BEGINN  stmtlist SEMICOLON END DOT | error
 proname : ID
-declist : dec | declist SEMICOLON dec 
-dec : idlist COLON type 
-type : standtype | arraytype 
-standtype : INTEGERS | REALS 
-arraytype : ARRAY LEFTS INTEGER DOT DOT INTEGER RIGHTS OF standtype 
-idlist : ID | idlist COMMA ID 
-stmtlist : stmt | stmtlist SEMICOLON stmt 
-stmt : assign | read | write | for| ifstmt 
-assign : varid EQUAL2 simpexp 
-ifstmt : IF LEFTC exp RIGHTC THEN body 
-exp : simpexp | exp relop simpexp 
-relop : BIG | SMALL | BIGEQUAL | SMALLEQUAL | BIGSMALL | EQUAL1 
-simpexp : term | simpexp PLUS term| simpexp MINUS term
-term : factor | term CROSS factor  | term DIVID factor 
-factor : varid | INTEGER | REAL | LEFTC simpexp RIGHTC
-read : READ LEFTC idlist RIGHTC
-write : WRITE LEFTC idlist RIGHTC
-for : FOR indexexp DO body 
-indexexp : varid EQUAL2 simpexp TO exp 
-varid : ID | ID LEFTS simpexp RIGHTS 
-body : stmt | BEGINN stmtlist SEMICOLON END 
+declist : dec | declist SEMICOLON dec | error
+dec : idlist COLON type | error
+type : standtype | arraytype | error
+standtype : INTEGERS | REALS |error
+arraytype : ARRAY LEFTS INTEGER DOT DOT INTEGER RIGHTS OF standtype | error
+idlist : ID | idlist COMMA ID | error
+stmtlist : stmt | stmtlist SEMICOLON stmt | error
+stmt : assign | read | write | for| ifstmt |error
+assign : varid EQUAL2 simpexp | error
+ifstmt : IF LEFTC exp RIGHTC THEN body | error 
+exp : simpexp | exp relop simpexp | error
+relop : BIG | SMALL | BIGEQUAL | SMALLEQUAL | BIGSMALL | EQUAL1 | error
+simpexp : term | simpexp PLUS term| simpexp MINUS term | error
+term : factor | term CROSS factor  | term DIVID factor | error
+factor : varid | INTEGER | REAL | LEFTC simpexp RIGHTC | error
+read : READ LEFTC idlist RIGHTC | error
+write : WRITE LEFTC idlist RIGHTC | error
+for : FOR indexexp DO body | error
+indexexp : varid EQUAL2 simpexp TO exp | error
+varid : ID | ID LEFTS simpexp RIGHTS | error
+body : stmt | BEGINN stmtlist SEMICOLON END | error
     ;
 %%
 int main()
