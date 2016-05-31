@@ -2,10 +2,11 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h>
+  #define YYERROR_VERBOSE
   extern int lineCount;
   extern int charCount;
   extern char *yytext;
-  void yyerror(char *s);
+  void yyerror(const char *s);
 %}
 %union{
   char *name;
@@ -36,23 +37,23 @@
 %type <name> indexexp
 %%
 prog :  PROGRAM proname SEMICOLON VAR declist SEMICOLON BEGINN  stmtlist SEMICOLON END DOT | error
-proname : ID
+proname : ID | error
 declist : dec | declist SEMICOLON dec | error
 dec : idlist COLON type | error
 type : standtype | arraytype | error
-standtype : INTEGERS | REALS |error
+standtype : INTEGERS | REALS | error 
 arraytype : ARRAY LEFTS INTEGER DOT DOT INTEGER RIGHTS OF standtype | error
 idlist : ID | idlist COMMA ID | error
 stmtlist : stmt | stmtlist SEMICOLON stmt | error
-stmt : assign | read | write | for| ifstmt |error
+stmt : assign | read | write | for| ifstmt | error 
 assign : varid EQUAL2 simpexp | error
-ifstmt : IF LEFTC exp RIGHTC THEN body | error 
+ifstmt : IF LEFTC exp RIGHTC THEN body | error
 exp : simpexp | exp relop simpexp | error
 relop : BIG | SMALL | BIGEQUAL | SMALLEQUAL | BIGSMALL | EQUAL1 | error
 simpexp : term | simpexp PLUS term| simpexp MINUS term | error
 term : factor | term CROSS factor  | term DIVID factor | error
-factor : varid | INTEGER | REAL | LEFTC simpexp RIGHTC | error
-read : READ LEFTC idlist RIGHTC | error
+factor : varid | INTEGER | REAL | LEFTC simpexp RIGHTC |error
+read : READ LEFTC idlist RIGHTC | error 
 write : WRITE LEFTC idlist RIGHTC | error
 for : FOR indexexp DO body | error
 indexexp : varid EQUAL2 simpexp TO exp | error
@@ -66,6 +67,6 @@ int main()
   yyparse();
   return 0;
 }
-void yyerror(char *s){
-    fprintf(stderr,"Errorline %d : '%s' syntax error\n",lineCount,yytext);
+void yyerror(const char *s){
+    fprintf(stderr,"Errorline %d : '%s' syntax error\n",lineCount,s);
   }
