@@ -67,5 +67,5 @@ int main()
   return 0;
 }
 void yyerror(char *s){
-    fprintf(stderr,"errorline %d : %s %s\n",lineCount,yytext,s);
+    fprintf(stderr,"Errorline %d : '%s' syntax error\n",lineCount,yytext);
   }
