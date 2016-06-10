@@ -1,0 +1,17 @@
+Line 1: program test;
+Line 2:var
+Line 3:  x: array [1 .. 5] of integer;
+Line 4:  a, c, d: integer;
+Line 5:begin
+Line 6:  b := 1;
+Line 7:  c := 3;
+Line 8:  a[2] :=c;
+Line 9:  for b := 1 TO b * 2 + 1 do
+Line 10:  BEGIN
+Line 11:    if (x[b] >= 2) then
+Line 12:      WRITE(b);
+Line 13:    for d:= 1 To (1 + 2) * 30 do
+Line 14:      WRITE(c);
+Line 15:  END;
+Line 16:end.
+Line 17:

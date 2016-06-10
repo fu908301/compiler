@@ -1,0 +1,11 @@
+Errorline 6 : ':' syntax error
+Errorline 8 : 'end' syntax error
+Line 1: program test;
+Line 2:var
+Line 3:  i, j : integer;
+Line 4:begin
+Line 5:  read(i);
+Line 6:  i : j;
+Line 7:  write(i)
+Line 8:end.
+Line 9:

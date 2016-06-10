@@ -1,0 +1,9 @@
+Errorline 3 : '222' syntax error
+Errorline 6 : ';' syntax error
+Line 1: program test;
+Line 2:var
+Line 3:  222 : integer;
+Line 4:begin
+Line 5:  read(b);
+Line 6:end;
+Line 7:

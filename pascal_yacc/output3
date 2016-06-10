@@ -1,0 +1,7 @@
+Errorline 3 : ':=' syntax error
+Line 1: program test;
+Line 2:var
+Line 3:  i, j := integer;
+Line 4:begin
+Line 5:  i := 5;
+Line 6:end.
