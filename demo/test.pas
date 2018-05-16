@@ -1,3 +1,4 @@
+(*This is comment*)
 program test;
 var
   i : integer;
